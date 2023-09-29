@@ -1,0 +1,1 @@
+ALTER TABLE `blogs` MODIFY COLUMN `author_id` int NOT NULL;

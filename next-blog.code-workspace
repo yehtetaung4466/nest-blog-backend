@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../next-blog"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.acceptSuggestionOnEnter": "on"
+	}
+}
