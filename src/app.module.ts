@@ -13,6 +13,7 @@ import { BlogModule } from './blog/blog.module';
 import { UserService } from './user/user.service';
 import { FileModule } from './file/file.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { FileService } from './file/file.service';
 
 @Module({
   imports: [

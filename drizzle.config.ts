@@ -5,7 +5,7 @@ export default {
   out: './drizzle',
   dbCredentials: {
     host: 'localhost',
-    user: 'root',
+    user: 'yehtetaung',
     password: 'Yehtet446646804#',
     database: 'nestBlog',
   },

@@ -13,8 +13,8 @@ export class UserGuard extends GeneralGuard {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const role = await this.getRole(context);
-    const canActivate = (await super.canActivate(context)) && role >= 0;
+    const user= await this.getUser(context);
+    const canActivate = (await super.canActivate(context)) && user.role >= 0;
     if (!canActivate) {
       throw new UnauthorizedException(
         'Your are not authorized for this action',

@@ -15,32 +15,20 @@ import { JWT_PAYLOAD } from 'src/utils/types';
 export class GeneralGuard implements CanActivate {
   constructor(protected drizzleService: DrizzleService) {}
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest() as Request;
-    const authHeader = request.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('need token');
+  async canActivate(ctx: ExecutionContext): Promise<boolean> {
+    const user = await this.getUser(ctx);
+    const request = ctx.switchToHttp().getRequest() as Request;
+    
+    if (!user) {
+      throw new UnauthorizedException('unauthorized');
     }
-    const token = authHeader.substring(7);
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET) as JWT_PAYLOAD;
-      const userId = decoded.id;
-      const user = await this.drizzleService.db
-        .select()
-        .from(users)
-        .where(eq(users.id, userId));
-      if (!user) {
-        throw new UnauthorizedException('user not found');
-      }
-      request.user = user[0];
-      return true;
-    } catch (err) {
-      return false;
-    }
+    request.user=user;
+    return true;
+    
   }
 
-  protected async getRole(context: ExecutionContext) {
-    const request = context.switchToHttp().getRequest() as Request;
+  protected async getUser(ctx: ExecutionContext) {
+    const request = ctx.switchToHttp().getRequest() as Request;
     const authHeader = request.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       throw new UnauthorizedException('need token');
@@ -56,7 +44,7 @@ export class GeneralGuard implements CanActivate {
       if (!user) {
         throw new UnauthorizedException('user not found');
       }
-      return user[0].role;
+      return user[0];
     } catch (err) {
       throw new Error(err);
     }

@@ -13,10 +13,9 @@ import { blogDto } from './blogDto';
 import { Request } from 'express';
 import { JWT_PAYLOAD } from 'src/utils/types';
 import { UserGuard } from 'src/guards/user.guard';
-import { ManagerGuard } from 'src/guards/manager.guard';
-import { AdminGuard } from 'src/guards/admin.guard';
 
-@Controller('blog')
+
+@Controller('blogs')
 export class BlogController {
   constructor(private blogService: BlogService) {}
 
