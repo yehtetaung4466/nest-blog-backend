@@ -4,6 +4,7 @@ import { BlogService } from './blog.service';
 import { DrizzleService } from 'src/drizzle/drizzle.service';
 
 @Module({
+  exports: [BlogService],
   controllers: [BlogController],
   providers: [BlogService, DrizzleService],
 })

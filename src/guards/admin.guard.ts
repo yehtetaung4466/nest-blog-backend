@@ -2,12 +2,13 @@ import {
   Injectable,
   ExecutionContext,
   UnauthorizedException,
+  CanActivate,
 } from '@nestjs/common';
 import { GeneralGuard } from './general.guard';
 import { DrizzleService } from 'src/drizzle/drizzle.service';
 
 @Injectable()
-export class AdminGuard extends GeneralGuard {
+export class AdminGuard extends GeneralGuard implements CanActivate {
   constructor(drizzleService: DrizzleService) {
     super(drizzleService);
   }

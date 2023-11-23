@@ -4,7 +4,9 @@ export type JWT_PAYLOAD = {
   role: number;
   profile: string;
   suspended: boolean;
-  email: string;
-  password: string;
+  // email: string;
+  // password: string;
   createdAt: Date;
+  iat: number;
+  exp: number;
 };

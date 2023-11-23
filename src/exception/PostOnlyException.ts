@@ -11,8 +11,13 @@ import {
 import { Response, Request } from 'express';
 
 @Catch(NotFoundException)
-export class PostOnlyException implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+export class PostOnlyException
+  implements ExceptionFilter
+{
+  catch(
+    exception: HttpException,
+    host: ArgumentsHost,
+  ) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
@@ -29,9 +34,11 @@ export class PostOnlyException implements ExceptionFilter {
         break;
       default:
         console.log(request.method);
-        response.status(HttpStatus.METHOD_NOT_ALLOWED).json({
-          message: 'Method Not Allowed',
-        });
+        response
+          .status(HttpStatus.METHOD_NOT_ALLOWED)
+          .json({
+            message: 'Method Not Allowed',
+          });
         break;
     }
   }
@@ -39,4 +46,3 @@ export class PostOnlyException implements ExceptionFilter {
 function next() {
   throw new Error('Function not implemented.');
 }
-

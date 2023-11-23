@@ -14,5 +14,8 @@ export class DrizzleService {
     port: this.configService.get('DB_PORT'),
     database: this.configService.get('DB_NAME'),
   });
-  public db = drizzle(this.connection, { schema, mode: 'default' });
+  public db = drizzle(this.connection, {
+    schema,
+    mode: 'default',
+  });
 }

@@ -42,7 +42,12 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
-    const user = (
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      email: db_email,
+      password: db_password,
+      ...user
+    } = (
       await this.drizzleService.db
         .select()
         .from(users)
@@ -53,20 +58,27 @@ export class AuthService {
     if (!user) {
       throw new HttpException('user does not exit', HttpStatus.NOT_FOUND);
     }
-    const isValid = await argon.verify(user.password, password);
+    const isValid = await argon.verify(db_password, password);
     if (!isValid) {
       throw new HttpException('incorrect password', HttpStatus.UNAUTHORIZED);
     }
-    delete user.password;
+    // delete user.password;
     const token = this.signToken(user);
     return {
       access_token: await token,
     };
   }
 
-  private signToken(payload: JWT_PAYLOAD) {
+  private signToken(payload: {
+    id: number;
+    name: string;
+    role: number;
+    profile: string;
+    suspended: boolean;
+    createdAt: Date;
+  }) {
     return this.jwtService.signAsync(payload, {
-      expiresIn: '1d',
+      expiresIn: '7d',
       secret: this.configService.get('JWT_SECRET'),
     });
   }

@@ -1,7 +1,6 @@
 # compiled output
 /dist
 /node_modules
-
 # Logs
 logs
 *.log
@@ -37,3 +36,7 @@ lerna-debug.log*
 .env
 
 next-blog.code-workspace
+.prettierrc
+
+/files
+/drizzle

@@ -3,6 +3,8 @@ import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 import { Request } from 'express';
@@ -18,13 +20,12 @@ export class GeneralGuard implements CanActivate {
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
     const user = await this.getUser(ctx);
     const request = ctx.switchToHttp().getRequest() as Request;
-    
+
     if (!user) {
       throw new UnauthorizedException('unauthorized');
     }
-    request.user=user;
+    request.user = user;
     return true;
-    
   }
 
   protected async getUser(ctx: ExecutionContext) {
@@ -44,9 +45,15 @@ export class GeneralGuard implements CanActivate {
       if (!user) {
         throw new UnauthorizedException('user not found');
       }
+
       return user[0];
     } catch (err) {
-      throw new Error(err);
+      if (err.message === 'jwt expired')
+        throw new UnauthorizedException('token expired');
+      throw new HttpException(
+        err.message || 'unexpect error occurs',
+        err.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

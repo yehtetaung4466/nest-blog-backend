@@ -3,20 +3,22 @@ import {
   boolean,
   int,
   mysqlTable,
-  smallint,
   text,
   timestamp,
   varchar,
+  mysqlEnum,
+  unique,
 } from 'drizzle-orm/mysql-core';
-
 export const users = mysqlTable('users', {
   id: int('id').primaryKey().autoincrement(),
   name: varchar('name', { length: 256 }).notNull().unique(),
   role: int('role').default(0).notNull(),
-  profile: text('profile').default('default'),
+  profile: text('profile'),
   suspended: boolean('suspended').default(false).notNull(),
   email: varchar('email', { length: 256 }).unique().notNull(),
-  password: varchar('password', { length: 256 }).notNull(),
+  password: varchar('password', {
+    length: 256,
+  }).notNull(),
   createdAt: timestamp('createdAt').defaultNow(),
 });
 
@@ -34,13 +36,19 @@ export const blogs = mysqlTable('blogs', {
   comment_count: int('comment_count').default(0),
 });
 
-export const blog_reactions = mysqlTable('reactions', {
-  id: int('id').primaryKey().autoincrement(),
-  reaction: smallint('reaction'),
-  author_id: int('author_id').references(() => users.id),
-  blog_id: int('blog_id').references(() => blogs.id),
-  createdAt: timestamp('createdAt').defaultNow(),
-});
+export const blog_reactions = mysqlTable(
+  'reactions',
+  {
+    id: int('id').primaryKey().autoincrement(),
+    reaction: mysqlEnum('reaction', ['like', 'dislike']),
+    author_id: int('author_id').references(() => users.id),
+    blog_id: int('blog_id').references(() => blogs.id),
+    createdAt: timestamp('createdAt').defaultNow(),
+  },
+  (t) => ({
+    uq1: unique().on(t.author_id, t.blog_id),
+  }),
+);
 
 export const comments = mysqlTable('comments', {
   id: int('id').primaryKey().autoincrement(),
