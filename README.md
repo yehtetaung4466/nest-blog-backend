@@ -8,10 +8,10 @@ This is the nest.js back-end part of the blog project.For front-end, check [next
  - ##### Set up the env variables
    - DB_URL
    - JWT_SECRET
-  - run `yarn push` to load the mysql
-  - run `yarn start:dev`
+  - run `pnpm push` to load the mysql
+  - run `pnpm start:dev`
 
 #### Optionally
-- run `yarn seed` to seed the database with some data
-- run `yarn studio` to access drizzle studio
+- run `pnpm seed` to seed the database with some data
+- run `pnpm studio` to access drizzle studio
  
