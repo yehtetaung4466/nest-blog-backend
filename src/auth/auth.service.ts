@@ -10,7 +10,6 @@ import * as argon from 'argon2';
 import { eq } from 'drizzle-orm';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { JWT_PAYLOAD } from 'src/utils/types';
 
 @Injectable()
 export class AuthService {
