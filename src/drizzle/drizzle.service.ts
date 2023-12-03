@@ -8,11 +8,12 @@ import { ConfigService } from '@nestjs/config';
 export class DrizzleService {
   constructor(private configService: ConfigService) {}
   private readonly connection = createConnection({
-    host: this.configService.get('DB_HOST'),
-    user: this.configService.get('DB_USER'),
-    password: this.configService.get('DB_PASSWORD'),
-    port: this.configService.get('DB_PORT'),
-    database: this.configService.get('DB_NAME'),
+    // host: this.configService.get('DB_HOST'),
+    // user: this.configService.get('DB_USER'),
+    // password: this.configService.get('DB_PASSWORD'),
+    // port: this.configService.get('DB_PORT'),
+    // database: this.configService.get('DB_NAME'),
+    uri: this.configService.get('DB_URL'),
   });
   public db = drizzle(this.connection, {
     schema,
