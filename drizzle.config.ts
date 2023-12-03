@@ -11,7 +11,7 @@ export default {
   //   database: process.env.DB_NAME,
   // },
   dbCredentials: {
-    connectionString: 'mysql://avnadmin:AVNS_By4qLC7RH-oqsQaycYW@nestblog-yehtet804p-17df.a.aivencloud.com:25366/defaultdb?ssl-mode=REQUIRED',
+    connectionString: process.env.DB_URL,
   },
   driver: 'mysql2',
 } satisfies Config;

@@ -6,11 +6,7 @@ This is the nest.js back-end part of the blog project.For front-end, check [next
 - clone the project
 - create .env file
  - ##### Set up the env variables
-   - DB_HOST
-   - DB_USER
-   - DB_PASSWORD
-   - DB_PORT
-   - DB_NAME
+   - DB_URL
    - JWT_SECRET
   - run `yarn push` to load the mysql
   - run `yarn start:dev`
