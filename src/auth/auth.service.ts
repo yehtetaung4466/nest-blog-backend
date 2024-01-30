@@ -41,12 +41,7 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
-    const {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      email: db_email,
-      password: db_password,
-      ...user
-    } = (
+    const user = (
       await this.drizzleService.db
         .select()
         .from(users)
@@ -57,7 +52,7 @@ export class AuthService {
     if (!user) {
       throw new HttpException('user does not exit', HttpStatus.NOT_FOUND);
     }
-    const isValid = await argon.verify(db_password, password);
+    const isValid = await argon.verify(user.password, password);
     if (!isValid) {
       throw new HttpException('incorrect password', HttpStatus.UNAUTHORIZED);
     }

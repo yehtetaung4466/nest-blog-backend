@@ -48,7 +48,7 @@ export class ReactionService {
         createdAt: new Date(Date.now()),
       });
       await this.drizzleService.db.execute(
-        sql`UPDATE blogs SET blogs.likes = (SELECT COUNT(*) FROM reactions WHERE reactions.blog_id=${parentBlogId} AND reactions.reaction = "like"),blogs.dislikes = (SELECT COUNT(*) FROM reactions WHERE reactions.blog_id=${parentBlogId} AND reactions.reaction = "dislike") WHERE blogs.id =${parentBlogId} `,
+        sql`UPDATE blogs SET blogs.likes = (SELECT COUNT(*) FROM reactions WHERE reactions.blog_id=${parentBlogId} AND reactions.reaction = 'like'),blogs.dislikes = (SELECT COUNT(*) FROM reactions WHERE reactions.blog_id=${parentBlogId} AND reactions.reaction = 'dislike') WHERE blogs.id =${parentBlogId} `,
       );
       return { msg: 'reaction successfully created' };
     } catch (err) {
@@ -69,7 +69,7 @@ export class ReactionService {
             );
           });
         await this.drizzleService.db.execute(
-          sql`UPDATE blogs SET blogs.likes = (SELECT COUNT(*) FROM reactions WHERE reactions.blog_id=${parentBlogId} AND reactions.reaction = "like"),blogs.dislikes = (SELECT COUNT(*) FROM reactions WHERE reactions.blog_id=${parentBlogId} AND reactions.reaction = "dislike") WHERE blogs.id =${parentBlogId} `,
+          sql`UPDATE blogs SET blogs.likes = (SELECT COUNT(*) FROM reactions WHERE reactions.blog_id=${parentBlogId} AND reactions.reaction = 'like'),blogs.dislikes = (SELECT COUNT(*) FROM reactions WHERE reactions.blog_id=${parentBlogId} AND reactions.reaction = 'dislike') WHERE blogs.id =${parentBlogId} `,
         );
         return {
           msg: 'did not create a new reaction but changed the exiting one',
